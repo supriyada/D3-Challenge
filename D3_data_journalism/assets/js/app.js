@@ -108,9 +108,23 @@ function makeResponsive() {
             .text(d=>d.abbr)
             .attr("font-family", "sans-serif")
             .attr("font-size", "10px")
-            .attr("fill", "black");
-        //    
-        //chartGroup.append("")
+            .attr("fill", "black")
+            
+        
+        //Axes labels
+        chartGroup.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left + 5)
+            .attr("x", 0 - (height / 2))
+            .attr("dy", "1em")
+            .attr("class", "axisText")
+            .text("Poverty %");
+
+        chartGroup.append("text")
+            .attr("transform", `translate(${(width / 2)-margin.left + 5}, ${height + margin.top-10})`)
+            .attr("class", "axisText")
+            .text("Healthcare %");
+            
 
     }).catch(function(error) {
         console.log(error);
