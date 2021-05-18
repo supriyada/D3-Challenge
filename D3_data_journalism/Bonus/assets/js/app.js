@@ -101,6 +101,38 @@ function makeResponsive() {
 
         return circlesGroup;
     }
+
+    // function used for updating circles group with new tooltip
+    function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
+
+    /*var label;
+  
+    if (chosenXAxis === "hair_length") {
+      label = "Hair Length:";
+    }
+    else {
+      label = "# of Albums:";
+    }
+  
+    var toolTip = d3.tip()
+      .attr("class", "tooltip")
+      .offset([80, -60])
+      .html(function(d) {
+        return (`${d.rockband}<br>${label} ${d[chosenXAxis]}`);
+      });
+  
+    circlesGroup.call(toolTip);
+  
+    circlesGroup.on("mouseover", function(data) {
+      toolTip.show(data);
+    })
+      // onmouseout event
+      .on("mouseout", function(data, index) {
+        toolTip.hide(data);
+      });
+ */ 
+    return circlesGroup;
+    }
     // Read CSV
     d3.csv("./assets/data/data.csv").then(function(healthData, err) {
         if (err) throw err;
@@ -207,14 +239,79 @@ function makeResponsive() {
             .attr("x", 0 - (height / 2))
             .classed("inactive", true)
             .text("Obese (%)");
-
-        }).catch(function(error) {
-            console.log(error);
-        });
-    }
         
-    // When the browser loads, makeResponsive() is called.
-    makeResponsive();
-    
-    // When the browser window is resized, makeResponsive() is called.
-    d3.select(window).on("resize", makeResponsive);
+        // updateToolTip function above csv import
+        //var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+
+        // x axis labels event listener
+        xlabelsGroup.selectAll("text")
+            .on("click", function () {
+                // get value of selection
+                var value = d3.select(this).attr("value");
+                if (value !== chosenXAxis) {
+
+                    // replaces chosenXAxis with value
+                    chosenXAxis = value;
+                    //chosenYAxis = value;
+                    // console.log(chosenXAxis)
+
+                    // functions here found above csv import
+                    // updates x scale for new data
+                    xLinearScale = xScale(healthData, chosenXAxis);
+
+                    // updates x axis with transition
+                    xAxis = renderXAxes(xLinearScale, xAxis);
+
+                    // updates circles with new x values
+                    circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
+
+                    // updates tooltips with new info
+                   // circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+
+                    // changes classes to change bold text
+                    if (chosenXAxis === "poverty") {
+                        povertyLabel
+                            .classed("active", true)
+                            .classed("inactive", false);
+                        ageLabel
+                            .classed("active", false)
+                            .classed("inactive", true);
+                        incomeLabel
+                            .classed("active", false)
+                            .classed("inactive", true);
+                    }
+                    else if (chosenXAxis === "age"){
+                        povertyLabel
+                            .classed("active", false)
+                            .classed("inactive", true);
+                        ageLabel
+                            .classed("active", true)
+                            .classed("inactive", false);
+                        incomeLabel
+                            .classed("active", false)
+                            .classed("inactive", true);
+                    }
+                    else {
+                        povertyLabel
+                            .classed("active", false)
+                            .classed("inactive", true);
+                        ageLabel
+                            .classed("active", false)
+                            .classed("inactive", true);
+                        incomeLabel
+                            .classed("active", true)
+                            .classed("inactive", false);
+                    }
+                }
+
+            });
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
+        
+// When the browser loads, makeResponsive() is called.
+makeResponsive();
+
+// When the browser window is resized, makeResponsive() is called.
+d3.select(window).on("resize", makeResponsive); 
