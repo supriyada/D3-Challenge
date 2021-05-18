@@ -13,14 +13,14 @@ function makeResponsive() {
   
     // SVG wrapper dimensions are determined by the current width and
     // height of the browser window.
-    var svgWidth = window.innerWidth-400;
+    var svgWidth = window.innerWidth-300;
     var svgHeight = window.innerHeight-300;
   
     var margin = {
       top: 50,
-      bottom: 50,
-      right: 50,
-      left: 50
+      bottom: 100,
+      right: 200,
+      left: 100
     };
   
     var height = svgHeight - margin.top - margin.bottom;
@@ -46,8 +46,10 @@ function makeResponsive() {
     // create scales
         var xLinearScale = d3.scaleLinear()
         .domain([d3.min(healthData, d => d[chosenXAxis]) * 0.8,
-            d3.max(healthData, d => d[chosenXAxis]) * 1.2
+          d3.max(healthData, d => d[chosenXAxis]) * 1.2
         ])
+
+        .domain([d3.min(healthData, d => d[chosenXAxis])-1,d3.max(healthData, d => d[chosenXAxis])+2])
         .range([0, width]);
     
         return xLinearScale;
@@ -60,6 +62,7 @@ function makeResponsive() {
       .domain([d3.min(healthData, d => d[chosenYAxis]) * 0.8,
         d3.max(healthData, d => d[chosenYAxis]) * 1.2
       ])
+      //.domain([d3.min(healthData, d => d[chosenYAxis])-1,d3.max(healthData, d => d[chosenYAxis])+2])
       .range([height,0]);
   
     return yLinearScale;
@@ -128,6 +131,7 @@ function makeResponsive() {
             .call(bottomAxis);
 
         var yAxis = chartGroup.append("g")
+           // .attr("transform", `translate(40,-35)`)
             .call(leftAxis);
 
         var circlesGroup = chartGroup.selectAll("circle")
@@ -140,47 +144,69 @@ function makeResponsive() {
             .attr("fill", "pink")
             .attr("opacity", ".5");
 
-        var text = chartGroup.selectAll(null)
+        var text = chartGroup.selectAll("all")
             .data(healthData)
             .enter()
             .append("text")
-            .attr("x", d => xLinearScale1(d.poverty))
-            .attr("y", d => yLinearScale1(d.healthcare)+3)
+            .attr("x", d => xLinearScale(d[chosenXAxis]))
+            .attr("y", d => yLinearScale(d[chosenYAxis]))
             .attr("text-anchor", "middle")
-            .text(d=>d.abbr)
+            .text(d => d.abbr)
             .attr("font-family", "sans-serif")
             .attr("font-size", "10px")
             .attr("fill", "black")
+            
 
         // Create group for two x-axis labels
         var xlabelsGroup = chartGroup.append("g")
-            .attr("transform", `translate(${width / 2}, ${height + 20})`);
+            .attr("transform", `translate(${width / 2}, ${height +5})`);
 
-        var healthcareLabel = xlabelsGroup.append("text")
+        var povertyLabel = xlabelsGroup.append("text")
             .attr("x", 0)
-            .attr("y", 20)
+            .attr("y", 30)
             .attr("value", "poverty") // value to grab for event listener
             .classed("active", true)
             .text("Poverty (%)");
 
         var ageLabel = xlabelsGroup.append("text")
             .attr("x", 0)
-            .attr("y", 40)
+            .attr("y", 50)
             .attr("value", "age") // value to grab for event listener
             .classed("inactive", true)
             .text("Age");
+        
+        var incomeLabel = xlabelsGroup.append("text")
+            .attr("x", 0)
+            .attr("y", 70)
+            .attr("value", "age") // value to grab for event listener
+            .classed("inactive", true)
+            .text("Income");
 
         // append y axis
         var ylabelsGroup = chartGroup.append("g")
             .attr("transform", "rotate(-90)")
             .attr("dy", "1em")
             
-        var povertyLabel = ylabelsGroup.append("text")    
+        var healthcareLabel = ylabelsGroup.append("text")    
             .classed("axis-text", true)
-            .attr("y", 0 - margin.left+12)
+            .attr("y", 0 - margin.left+60)
             .attr("x", 0 - (height / 2))
             .classed("active", true)
             .text("Healthcare (%)");
+        
+        var smokerLabel = ylabelsGroup.append("text")    
+            .classed("axis-text", true)
+            .attr("y", 0 - margin.left+40)
+            .attr("x", 0 - (height / 2))
+            .classed("inactive", true)
+            .text("Smokers (%)");
+
+        var ObesityLabel = ylabelsGroup.append("text")    
+            .classed("axis-text", true)
+            .attr("y", 0 - margin.left+20)
+            .attr("x", 0 - (height / 2))
+            .classed("inactive", true)
+            .text("Obese (%)");
 
         }).catch(function(error) {
             console.log(error);
