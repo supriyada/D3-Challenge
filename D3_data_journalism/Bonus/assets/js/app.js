@@ -93,6 +93,7 @@ function makeResponsive() {
     // function used for updating circles group with a transition to
     // new circles
     function renderCircles(circlesGroup, newXScale, newYScale, chosenXAxis, chosenYAxis) {
+    //function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 
         circlesGroup.transition()
             .duration(1000)
@@ -264,9 +265,10 @@ function makeResponsive() {
 
                     // updates x axis with transition
                     xAxis = renderXAxes(xLinearScale, xAxis);
+                   // yAxis = renderYAxes(yLinearScale, yAxis);
 
                     // updates circles with new x values
-                    //circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
+                    circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis,chosenYAxis);
 
                     // updates tooltips with new info
                    // circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
@@ -327,7 +329,7 @@ function makeResponsive() {
                     yAxis = renderYAxes(yLinearScale, yAxis);
 
                     // updates circles with new x values
-                    //circlesGroup = renderCircles(circlesGroup, yLinearScale, chosenYAxis);
+                    circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale,chosenXAxis, chosenYAxis);
 
                     // updates tooltips with new info
                    // circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
@@ -369,8 +371,8 @@ function makeResponsive() {
                 }
 
             });
-            console.log(`Outside: x-${chosenXAxis}, y-${chosenYAxis}`)
-            circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
+            //console.log(`Outside: x-${chosenXAxis}, y-${chosenYAxis}`)
+            //circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
             
     }).catch(function(error) {
         console.log(error);
