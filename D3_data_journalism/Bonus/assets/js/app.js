@@ -103,6 +103,22 @@ function makeResponsive() {
         return circlesGroup;
     }
 
+   function renderText(text, newXScale, newYScale, chosenXAxis, chosenYAxis){
+        /*console.log(Object.values(text)[0])
+        //var t = chartGroup.selectAll("text")
+        var t = Object.values(text)[0]
+        t.forEach(function (t){
+            console.log(t.innerHTML)
+
+        })*/
+        text.transition()
+            .duration(1000)
+            .attr("x", d => newXScale(d[chosenXAxis]))
+            .attr("y", d => newYScale(d[chosenYAxis]))
+            .text(d => d.abbr)
+
+        return text;
+    }
     // function used for updating circles group with new tooltip
     function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 
@@ -247,6 +263,8 @@ function makeResponsive() {
         // updateToolTip function above csv import
         //var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
+        //var circlesGroup = renderText(circlesGroup, chosenXAxis, chosenYAxis)
+
         // x axis labels event listener
         xlabelsGroup.selectAll("text")
             .on("click", function () {
@@ -271,7 +289,9 @@ function makeResponsive() {
 
                     // updates circles with new x values
                     circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis,chosenYAxis);
+                    text = renderText(text,xLinearScale, yLinearScale,chosenXAxis, chosenYAxis);
 
+                    //text = renderText(text, chosenXAxis, chosenYAxis)
                     // updates tooltips with new info
                    // circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
@@ -331,8 +351,8 @@ function makeResponsive() {
                     yAxis = renderYAxes(yLinearScale, yAxis);
 
                     // updates circles with new x values
-                    circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale,chosenXAxis, chosenYAxis);
-
+                    circlesGroup = renderCircles(circlesGroup,xLinearScale, yLinearScale,chosenXAxis, chosenYAxis);
+                    text = renderText(text,xLinearScale, yLinearScale,chosenXAxis, chosenYAxis);
                     // updates tooltips with new info
                    // circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
