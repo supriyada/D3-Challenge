@@ -5,6 +5,11 @@
 }
 .container{
   background-color:lavenderblush;
+  
+}
+
+#scatter{
+  border:grey solid 1px;
 }
 
 /* Sticky Footer rules (https://getbootstrap.com/examples/sticky-footer/) */

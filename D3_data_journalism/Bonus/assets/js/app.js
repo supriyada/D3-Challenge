@@ -20,7 +20,7 @@ function makeResponsive() {
         top: 50,
         bottom: 100,
         right: 300,
-        left: 100
+        left: 200
     };
 
     var height = svgHeight - margin.top - margin.bottom;
@@ -158,7 +158,8 @@ function makeResponsive() {
             
             .html(function (d) {
                 setValue(d)
-                return (`<strong>${d.state}</strong><br><br>${xlabel} ${xvalue}<br>${ylabel} ${yvalue}`);
+                return (`<strong>${d.state}</strong><br><br><strong>${xlabel}</strong> 
+                ${xvalue}<br><strong>${ylabel}</strong> ${yvalue}`);
             });
 
         circlesGroup.call(toolTip);
@@ -167,12 +168,15 @@ function makeResponsive() {
             
             d3.select(this)
                 .attr("fill", "darkred")
+                .attr("stroke", "black")
+                .attr("stroke-width","2")
             toolTip.show(data);
         })
             // onmouseout event
             .on("mouseout", function (data) {
                 d3.select(this)
                     .attr("fill", "pink")
+                    .attr("stroke", "none")
                 toolTip.hide(data);
             });
 
@@ -231,6 +235,14 @@ function makeResponsive() {
             .text(d => d.abbr)
             .attr("class", "text")
 
+        var titleText = chartGroup.append("text")
+                                .attr("x", (width / 2))             
+                                .attr("y", 0 - (margin.top / 2))
+                                .attr("text-anchor", "middle")  
+                                .style("font-size", "25px") 
+                                .style("text-decoration", "underline")  
+                                .text(" Graph");
+
         // Create group for two x-axis labels
         var xlabelsGroup = chartGroup.append("g")
             .attr("transform", `translate(${width / 2}, ${height + 5})`);
@@ -240,7 +252,7 @@ function makeResponsive() {
             .attr("y", 30)
             .attr("value", "poverty") // value to grab for event listener
             .classed("active", true)
-            .text("Poverty (%)");
+            .text("In Poverty (%)");
 
 
         var ageLabel = xlabelsGroup.append("text")
@@ -248,14 +260,14 @@ function makeResponsive() {
             .attr("y", 50)
             .attr("value", "age") // value to grab for event listener
             .classed("inactive", true)
-            .text("Age");
+            .text("Age (Median)");
 
         var incomeLabel = xlabelsGroup.append("text")
             .attr("x", 0)
             .attr("y", 70)
             .attr("value", "income") // value to grab for event listener
             .classed("inactive", true)
-            .text("Income");
+            .text("Income (Median)");
 
         // append y axis
         var ylabelsGroup = chartGroup.append("g")
@@ -264,15 +276,15 @@ function makeResponsive() {
 
         var healthcareLabel = ylabelsGroup.append("text")
             .classed("axis-text", true)
-            .attr("y", 0 - margin.left + 60)
+            .attr("y", 0 - margin.left + 150)
             .attr("x", 0 - (height / 2))
             .attr("value", "healthcare")
             .classed("active", true)
-            .text("Healthcare (%)");
+            .text("Lacks Healthcare (%)");
 
         var smokerLabel = ylabelsGroup.append("text")
             .classed("axis-text", true)
-            .attr("y", 0 - margin.left + 40)
+            .attr("y", 0 - margin.left + 130)
             .attr("x", 0 - (height / 2))
             .attr("value", "smokes")
             .classed("inactive", true)
@@ -280,7 +292,7 @@ function makeResponsive() {
 
         var ObesityLabel = ylabelsGroup.append("text")
             .classed("axis-text", true)
-            .attr("y", 0 - margin.left + 20)
+            .attr("y", 0 - margin.left + 110)
             .attr("x", 0 - (height / 2))
             .attr("value", "obesity")
             .classed("inactive", true)
