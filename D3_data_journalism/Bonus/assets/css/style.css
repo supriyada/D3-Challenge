@@ -1,6 +1,10 @@
 .iframeContainer {
   padding: 20px;
   border: 1px solid #e3e3e3;
+  
+}
+.container{
+  background-color:lavenderblush;
 }
 
 /* Sticky Footer rules (https://getbootstrap.com/examples/sticky-footer/) */
@@ -30,11 +34,24 @@ body {
   font-size: 16px;
 }
 
-
+.text {
+  font-family: sans-serif;
+  font-weight: bold;
+  fill:crimson;
+  text-anchor: middle;
+  font-size: 12px;
+}
 
 .axisText {
   font-family: sans-serif;
   font-weight: bold;
-  fill: #551aaf;
+  fill:"brown";
   text-anchor: middle;
 }
+
+.labelText{
+  color: "brown";
+}
+
+
+
