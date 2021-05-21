@@ -13,7 +13,10 @@ body {
   /* Padding bottom by footer height */
   padding-bottom: 80px;
 }
-
+.container{
+  background-image: linear-gradient(#badef7, #ebdaf5);
+    
+}
 #footer {
   position: absolute;
   bottom: 0;

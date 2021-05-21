@@ -4,8 +4,8 @@
   
 }
 .container{
-  background-color:lavenderblush;
-  
+  background-image: linear-gradient(#badef7, #ebdaf5);
+    
 }
 
 #scatter{
@@ -51,5 +51,11 @@ body {
   color: "brown";
 }
 
+.yAxis path {
+  stroke:#b5091a;
+}
 
+.xAxis path {
+  stroke:#b5091a;
+}
 

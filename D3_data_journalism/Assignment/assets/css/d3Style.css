@@ -26,13 +26,15 @@
 /* font size dependent on radius, see app.js */
 .stateText {
   font-family: sans-serif;
-  fill: #fff;
+  fill:black;
+  font-size: 10px;
+  font-weight: bold;
   text-anchor: middle;
 }
 
 .stateCircle {
-  fill: #89bdd3;
-  stroke: #e3e3e3;
+  fill:red;
+  fill-opacity:.5
 }
 
 .chart {
@@ -42,13 +44,13 @@
 
 .d3-tip {
   padding: 6px;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1;
   line-height: 1.5em;
-  color: #fff;
-  text-align: center;
+  color:black;
+  
   text-transform: capitalize;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(146, 137, 137, 0.8);
   border-radius: 4px;
 }
 

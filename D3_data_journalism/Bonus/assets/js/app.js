@@ -13,7 +13,7 @@ function makeResponsive() {
 
     // SVG wrapper dimensions are determined by the current width and
     // height of the browser window.
-    var svgWidth = window.innerWidth - 400;
+    var svgWidth = window.innerWidth;
     var svgHeight = window.innerHeight - 200;
 
     var margin = {
@@ -228,11 +228,13 @@ function makeResponsive() {
         var xAxis = chartGroup.append("g")
             .classed("x-axis", true)
             .attr("transform", `translate(0, ${height})`)
-            .call(bottomAxis);
+            .call(bottomAxis)
+            .attr("class","xAxis")
 
         var yAxis = chartGroup.append("g")
             // .attr("transform", `translate(40,-35)`)
-            .call(leftAxis);
+            .call(leftAxis)
+            .attr("class","yAxis")
         
         var circlesGroup = chartGroup.selectAll("circle")
             .data(healthData)
