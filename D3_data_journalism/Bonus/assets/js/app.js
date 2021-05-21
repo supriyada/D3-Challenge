@@ -31,7 +31,8 @@ function makeResponsive() {
         .select(".chart")
         .append("svg")
         .attr("height", svgHeight)
-        .attr("width", svgWidth);
+        .attr("width", svgWidth)
+        .attr("fill","#1e5934")
 
     // Append group element
     var chartGroup = svg.append("g")
@@ -74,6 +75,21 @@ function makeResponsive() {
 
     }
 
+    /*function cScale(healthData){
+        /*const colorScale = d3.scaleOrdinal()
+                            
+                            .domain([d3.min(healthData, d => d[chosenXAxis]),
+                            d3.max(healthData, d => d[chosenXAxis])
+                            ])
+                            .range(d3.schemeCategory10)
+
+        var colorScale = d3.scaleLinear().domain([d3.min(healthData, d => d[chosenXAxis]),
+                                        d3.max(healthData, d => d[chosenXAxis])])
+                            .range(["white", "blue"])
+
+        return colorScale;
+    }*/
+    
     // function used for updating xAxis var upon click on axis label
     function renderXAxes(newXScale, xAxis) {
         var bottomAxis = d3.axisBottom(newXScale);
@@ -158,8 +174,10 @@ function makeResponsive() {
             
             .html(function (d) {
                 setValue(d)
-                return (`<strong>${d.state}</strong><br><br><strong>${xlabel}</strong> 
-                ${xvalue}<br><strong>${ylabel}</strong> ${yvalue}`);
+                //return (`<strong>${d.state}</strong><br><br><strong>${xlabel}</strong> 
+                //${xvalue}<br><strong>${ylabel}</strong> ${yvalue}`);
+                return(`<h4>${d.state}</h4><strong>${xlabel}</strong> 
+                ${xvalue}<br><br><strong>${ylabel}</strong> ${yvalue}<br>`)
             });
 
         circlesGroup.call(toolTip);
@@ -167,7 +185,7 @@ function makeResponsive() {
         circlesGroup.on("mouseover", function (data) {
             
             d3.select(this)
-                .attr("fill", "darkred")
+                .attr("fill", "#ad0561")
                 .attr("stroke", "black")
                 .attr("stroke-width","2")
             toolTip.show(data);
@@ -175,7 +193,7 @@ function makeResponsive() {
             // onmouseout event
             .on("mouseout", function (data) {
                 d3.select(this)
-                    .attr("fill", "pink")
+                    .attr("fill", "#99577c")
                     .attr("stroke", "none")
                 toolTip.hide(data);
             });
@@ -215,16 +233,16 @@ function makeResponsive() {
         var yAxis = chartGroup.append("g")
             // .attr("transform", `translate(40,-35)`)
             .call(leftAxis);
-
+        
         var circlesGroup = chartGroup.selectAll("circle")
             .data(healthData)
             .enter()
             .append("circle")
             .attr("cx", d => xLinearScale(d[chosenXAxis]))
-            .attr("cy", d => yLinearScale(d[chosenYAxis]))
+            .attr("cy", d => yLinearScale(d[chosenYAxis]))            
             .attr("r", 12)
-            .attr("fill", "pink")
-            .attr("opacity", ".5");
+            .attr("class", "stateCircle")      
+            
 
         var text = chartGroup.selectAll("all")
             .data(healthData)
@@ -233,7 +251,7 @@ function makeResponsive() {
             .attr("x", d => xLinearScale(d[chosenXAxis]))
             .attr("y", d => yLinearScale(d[chosenYAxis]) + 4)
             .text(d => d.abbr)
-            .attr("class", "text")
+            .attr("class", "stateText")
 
         var titleText = chartGroup.append("text")
                                 .attr("x", (width / 2))             
@@ -242,6 +260,8 @@ function makeResponsive() {
                                 .style("font-size", "25px") 
                                 .style("text-decoration", "underline")  
                                 .text(" Graph");
+
+                               
 
         // Create group for two x-axis labels
         var xlabelsGroup = chartGroup.append("g")

@@ -39,13 +39,6 @@ body {
   font-size: 16px;
 }
 
-.text {
-  font-family: sans-serif;
-  font-weight: bold;
-  fill:crimson;
-  text-anchor: middle;
-  font-size: 12px;
-}
 
 .axisText {
   font-family: sans-serif;
