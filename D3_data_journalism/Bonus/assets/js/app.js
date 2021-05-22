@@ -13,13 +13,13 @@ function makeResponsive() {
 
     // SVG wrapper dimensions are determined by the current width and
     // height of the browser window.
-    var svgWidth = window.innerWidth;
+    var svgWidth = window.innerWidth ;
     var svgHeight = window.innerHeight - 200;
 
     var margin = {
         top: 50,
         bottom: 100,
-        right: 300,
+        right: 50,
         left: 200
     };
 
@@ -50,14 +50,14 @@ function makeResponsive() {
                 .domain([d3.min(healthData, d => d[chosenXAxis] - 500),
                 d3.max(healthData, d => d[chosenXAxis] + 2000)
                 ])
-                .range([0, width]);
+                .range([0, width/2]);
         }
         else {
             var xLinearScale = d3.scaleLinear()
                 .domain([d3.min(healthData, d => d[chosenXAxis] - 0.5),
                 d3.max(healthData, d => d[chosenXAxis] + 2)
                 ])
-                .range([0, width]);
+                .range([0, width/2]);
         }
         return xLinearScale;
     }
@@ -75,20 +75,6 @@ function makeResponsive() {
 
     }
 
-    /*function cScale(healthData){
-        /*const colorScale = d3.scaleOrdinal()
-                            
-                            .domain([d3.min(healthData, d => d[chosenXAxis]),
-                            d3.max(healthData, d => d[chosenXAxis])
-                            ])
-                            .range(d3.schemeCategory10)
-
-        var colorScale = d3.scaleLinear().domain([d3.min(healthData, d => d[chosenXAxis]),
-                                        d3.max(healthData, d => d[chosenXAxis])])
-                            .range(["white", "blue"])
-
-        return colorScale;
-    }*/
     
     // function used for updating xAxis var upon click on axis label
     function renderXAxes(newXScale, xAxis) {
@@ -256,18 +242,18 @@ function makeResponsive() {
             .attr("class", "stateText")
 
         var titleText = chartGroup.append("text")
-                                .attr("x", (width / 2))             
+                                .attr("x", (width / 2) * 0.5)             
                                 .attr("y", 0 - (margin.top / 2))
                                 .attr("text-anchor", "middle")  
                                 .style("font-size", "25px") 
                                 .style("text-decoration", "underline")  
-                                .text(" Graph");
+                                .text("Health Risk Factors");
 
                                
 
         // Create group for two x-axis labels
         var xlabelsGroup = chartGroup.append("g")
-            .attr("transform", `translate(${width / 2}, ${height + 5})`);
+            .attr("transform", `translate(${(width / 2) * 0.5}, ${height + 5})`);
 
         var povertyLabel = xlabelsGroup.append("text")
             .attr("x", 0)

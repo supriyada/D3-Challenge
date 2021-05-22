@@ -17,6 +17,7 @@ body {
   background-image: linear-gradient(#badef7, #ebdaf5);
     
 }
+
 #footer {
   position: absolute;
   bottom: 0;
@@ -41,3 +42,4 @@ body {
   fill: #551aaf;
   text-anchor: middle;
 }
+
