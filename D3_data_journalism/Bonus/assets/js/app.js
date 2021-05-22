@@ -160,8 +160,6 @@ function makeResponsive() {
             
             .html(function (d) {
                 setValue(d)
-                //return (`<strong>${d.state}</strong><br><br><strong>${xlabel}</strong> 
-                //${xvalue}<br><strong>${ylabel}</strong> ${yvalue}`);
                 return(`<h4>${d.state}</h4><strong>${xlabel}</strong> 
                 ${xvalue}<br><br><strong>${ylabel}</strong> ${yvalue}<br>`)
             });
@@ -190,8 +188,6 @@ function makeResponsive() {
     // Read CSV
     d3.csv("./assets/data/data.csv").then(function (healthData, err) {
         if (err) throw err;
-
-        console.log(healthData)
 
         healthData.forEach(function (data) {
             data.healthcare = +data.healthcare;
@@ -321,9 +317,6 @@ function makeResponsive() {
                     // replaces chosenXAxis with value
                     chosenXAxis = value;
 
-                    console.log(chosenXAxis)
-
-
                     // functions here found above csv import
                     // updates x scale for new data
                     xLinearScale = xScale(healthData, chosenXAxis);
@@ -383,24 +376,24 @@ function makeResponsive() {
                 var yValue = d3.select(this).attr("value");
                 if (yValue !== chosenYAxis) {
 
-                    // replaces chosenXAxis with value
+                    // replaces chosenYAxis with value
                     chosenYAxis = yValue;
 
                     console.log(chosenYAxis)
 
                     // functions here found above csv import
-                    // updates x scale for new data
+                    // updates y scale for new data
                     yLinearScale = yScale(healthData, chosenYAxis);
 
-                    // updates x axis with transition
+                    // updates y axis with transition
                     yAxis = renderYAxes(yLinearScale, yAxis);
 
-                    // updates circles with new x values
+                    // updates circles with new y values
                     circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
                     text = renderText(text, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
+                   
                     // updates tooltips with new info
-                    // circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
-                    circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+                   circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
                     // changes classes to change bold text
                     if (chosenYAxis === "healthcare") {
